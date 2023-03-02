@@ -1,4 +1,4 @@
----
+  # This is the shift database deployment manifest.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -44,6 +44,7 @@ spec:
       restartPolicy: Always
       
 ---
+  # This is the shift-database Service manifest.
 apiVersion: v1
 kind: Service
 metadata:

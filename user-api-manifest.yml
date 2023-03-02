@@ -1,3 +1,4 @@
+  # This is the user-api deployment manifest section.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -39,8 +40,10 @@ spec:
             secretKeyRef:
               name: database-secrets
               key: db_user_password
+        resources: {}     # other resources can be further defined here
 
 ---
+  # This is the user-api Load Balancer Service manifest.
 apiVersion: v1
 kind: Service
 metadata:
@@ -56,6 +59,7 @@ spec:
 
 
 ---
+  # This is the user-api Horizontal Pod Autoscaler manifest.
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
