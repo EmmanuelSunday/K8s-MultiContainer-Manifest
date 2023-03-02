@@ -30,7 +30,7 @@ To achieve a rollback during a failed update or if required, another parameter i
 
 To manage the permissions for the developers, I assumed that there is a group already created in the AWS IAM User Group for the development. Therefore, I have created a ClusterRole.yml manifest and a ClusterRoleBinding manifest file that used subject as the group (development-team) that we have for our developers. The ClusterRole have resources as deployments and all the verbs except "delete" and I have assigned this role to the developer's group using the cluster role binding, so that the developers in that group have permission to watch and update the deployment however, they can not delete the deployment.
 
-#          Bonus questions
+#          Bonus
 
 ## Applying the configs to multiple environments (staging vs production)?
 
