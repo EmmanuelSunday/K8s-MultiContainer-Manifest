@@ -2,7 +2,7 @@
 This K8s project is deployed on AWS cloud using EKS, and 
 The k8s manifest templates are created in YAML
 
-## ** EXERCISE IMPLEMENTATION **
+## ** Exercise Implementation **
 
 To implement this exercise and arrive at the desired result, 
 the following steps are taken.
@@ -30,8 +30,14 @@ To achieve a rollback during a failed update or if required, another parameter i
 
 To manage the permissions for the developers, I assumed that there is a group already created in the AWS IAM User Group for the development. Therefore, I have created a ClusterRole.yml manifest and a ClusterRoleBinding manifest file that used subject as the group (development-team) that we have for our developers. The ClusterRole have resources as deployments and all the verbs except "delete" and I have assigned this role to the developer's group using the cluster role binding, so that the developers in that group have permission to watch and update the deployment however, they can not delete the deployment.
 
+#        ##  Bonus questions
 
+## Applying the configs to multiple environments (staging vs production)?
 
+There are a couple of ways to apply configs to multiple environments (e.g Staging and Production environments); One way is to use **Kubernetes Namespaces** which is a way of partitioning a single Kubernetes cluster into multiple virtual clusters, whereby each of the virtual clusters can have its own configurations. You can create separate namespaces for each environment (e.g., staging and production) and apply the appropriate configurations to each namespace. This approach keeps your configurations organized and separated from each other. 
+Another way is to use **Helm Charts** which is a Kubernetes package manager that allows definition, installation, and managing Kubernetes applications. Helm charts can be used to create and deploy application to multiple environments with different configurations. 
+Another very popular way is to use the **Kubernetes ConfigMaps and Secrets** which Kubernetes provides to manage application's configuration data. ConfigMaps and Secrets can be created for each environment and use to supply environment-specific configuration data to application just as we have used in this exercise. Here, we used the ConfigMap and Secret to provide configurations setting to our user-api-deployment, shift-api-deployment, and database-deployments.
+Outlined in the text below is the data provided in the **Secret-manifest.yml** file.
 
                 db_root_name: RootName
                 db_root_password: RootPassword
