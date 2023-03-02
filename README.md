@@ -2,7 +2,7 @@
 This K8s project is deployed on AWS cloud using EKS, and 
 The k8s manifest templates are created in YAML
 
-## **** EXERCISE IMPLEMENTATION *****
+## ** EXERCISE IMPLEMENTATION **
 
 To implement this exercise and arrive at the desired result, 
 the following steps are taken.
