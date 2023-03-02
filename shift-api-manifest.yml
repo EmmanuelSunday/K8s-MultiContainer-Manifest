@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shift-api-deployment
+  labels:
+    app: shift-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: shift-api
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  revisionHistoryLimit: 2
+  template:
+    metadata:
+      labels:
+        app: shift-api
+    spec:
+      containers:
+      - name: shift-api
+        image: wordpress:latest
+        env:
+        - name: WORDPRESS_DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: database-configmap
+              key: shift_database_url
+        - name: WORDPRESS_DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: database-secrets
+              key: db_user_name
+        - name: WORDPRESS_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database-secrets
+              key: db_user_password
+        - name: WORDPRESS_DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: database-secrets
+              key: db_root_name
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shift-api-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: shift-api
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: shift-api-autoscaler
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: shift-api
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 70
