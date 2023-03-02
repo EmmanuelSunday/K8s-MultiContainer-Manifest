@@ -34,9 +34,6 @@ To manage the permissions for the developers, I assumed that there is a group al
 
 
                 db_root_name: RootName
-
                 db_root_password: RootPassword
-
                 db_user_name: UserName
-                
                 db_user_password: UserPassword
