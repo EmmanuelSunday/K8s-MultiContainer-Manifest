@@ -5,7 +5,7 @@ metadata:
   labels:
     app: shift-api
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: shift-api
@@ -44,6 +44,11 @@ spec:
             secretKeyRef:
               name: database-secrets
               key: db_root_name
+        resources:
+          limits:
+            cpu: 100m
+          requests:
+            cpu: 30m
 
 ---
 apiVersion: v1
@@ -68,7 +73,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: shift-api
+    name: shift-api-deployment
   minReplicas: 2
-  maxReplicas: 5
+  maxReplicas: 10
   targetCPUUtilizationPercentage: 70
